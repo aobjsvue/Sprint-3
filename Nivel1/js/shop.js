@@ -1,6 +1,6 @@
 // If you have time, you can move this variable "products" to a json or js file and load the data in this js. It will look more professional
 var products = [
-   {
+    {
         id: 1,
         name: 'cooking oil',
         price: 10.5,
@@ -75,22 +75,72 @@ var total = 0;
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
+    // La funció que has de completar es diu buy(), la qual rep l'id del producte a afegir. Has de buscar el producte utilitzant aquest id rebut a l'array products, per finalment afegir-ho al array cartList. Els botons que han d'executar la funció buy() són els blaus que es troben en cada producte. Ajuda: per a buscar el producte a l'array products mitjançant l'id, pots utilitzar un bucle for.
+    for (let i = 0; i < products.length; i++) {
+        if (products[i].id === id) {
+            cartList.push(products[i]);
+            i++;
+        }
+    }
+    console.log("productos añadidos a cartList debajo:");
+    console.log(cartList);
 }
 
 // Exercise 2
 function cleanCart() {
-
+    // Ara implementarem una funció que permeti a l'usuari/ària eliminar l'array generat a l'anterior exercici: buidar el carret. En aquest cas, hauràs d'emplenar la funció cleanCart(), la qual ha de reinicialitzar la variable cartList.
+    cartList = [];
+    console.log("cartList vacía " + cartList);
 }
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
+    //Genial, l'e-commerce va prenent forma!, és el moment de calcular el total de l'import del carretó. S'ha d'implementar un bucle for per anar sumant l'import de tots els productes.
+    // let prices = 0;
+    for (let i = 0; i < cartList.length; i++) {
+        total += cartList[i].price;
+    }
+    return console.log("precio total de la suma de productos: " + total);
 }
 
 // Exercise 4
 function generateCart() {
-    // Using the "cartlist" array that contains all the items in the shopping cart, 
-    // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    // Using the "cartlist" array that contains all the items in the shopping cart, generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
+    // Com hauràs pogut observar, tenim molts ítems repetits al carretó de la compra. Seria més convenient que no apareguessin repetits, sinó que cada producte del carret comptés amb un camp quantitat. Per a això, hauràs de completar la funció generateCart(), la qual rep l'array cartList, generant l'array cart. Crea un botó per tal de poder cridar a la funció generateCart(). Ajuda: Simplement s'ha de fer un bucle sobre el array cartList que rep la funció. -Per cada element de cartList, hem de validar si existeix en el array cart: En cas que no existeixi, l'afegim a l'array cart (compte, que no se t'oblidi agregar la propietat quantity amb valor 1 al producte abans de fer push). Si, en canvi, ja existeix aquest producte al carretó, haurem d'incrementar el camp quantity.
+    cart = [];
+    let i, j;
+    let repeated = false;
+    
+    // Outer for loop
+    for (i = 0; i < cartList.length; i++) {
+        // Inner for loop
+        if (cart.length == 0) {
+            cartList[i].quantity = 1;
+            cart.push(cartList[i]);
+        }
+        
+        for (j = 0; j < cart.length; j++) {
+            // Skip self comparison
+            if (i !== j) {
+                // Check for duplicate
+                if (cartList[i].id === cart[j].id) {
+                    cart[j].quantity++;
+                    repeated = true;
+                    // Terminate inner loop
+                    break;
+                } else {
+                    repeated = false;
+                }
+            }
+        }
+
+        if (repeated == false && i != 0) {
+            cartList[i].quantity = 1;
+            cart.push(cartList[i]);
+        }
+    }
+    console.log(cart);
 }
 
 // Exercise 5
