@@ -5,10 +5,6 @@ var products = [
         name: 'Cooking oil',
         price: 10.5,
         type: 'grocery',
-        offer: {
-            number: 3,
-            percent: 20
-        }
     },
     {
         id: 2,
@@ -21,10 +17,6 @@ var products = [
         name: 'Instant cupcake mixture',
         price: 5,
         type: 'grocery',
-        offer: {
-            number: 10,
-            percent: 30
-        }
     },
     {
         id: 4,
@@ -97,27 +89,39 @@ function cleanCart() {
 
     cart = [];
     document.getElementById("cart_list").innerHTML = "";
+    document.getElementById("cart_empty").style.display = "block";
+    document.getElementById("cart_empty").innerHTML = "Your cart is empty.";
     document.getElementById("total_price").innerHTML = total.toFixed(2);
 }
 
 // Exercise 3
 function calculateTotal() {
     // Calculate total price of the cart using the "cartList" array
-    
+    totalCartList = 0;
+    total = 0;
+
     for (let i = 0; i < cartList.length; i++) {
-        total += cartList[i].price;
+        totalCartList += cartList[i].price;
     }
 
     for (let i = 0; i < cart.length; i++) {
         total += cart[i].price * cart[i].quantity;
     }
-    return console.log(total);
+
+    if (total > 0) {
+        document.getElementById("total_price").innerHTML = total.toFixed(2);
+        document.getElementById("cart_empty").style.display = "none";
+    } else {
+        document.getElementById("total_price").innerHTML = "0.00";
+        document.getElementById("cart_empty").innerHTML = "Your cart is empty.";
+    }
+
+    console.log(totalCartList);
 }
 
 // Exercise 4
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-    // Com hauràs pogut observar, tenim molts ítems repetits al carretó de la compra. Seria més convenient que no apareguessin repetits, sinó que cada producte del carret comptés amb un camp quantitat. Per a això, hauràs de completar la funció generateCart(), la qual rep l'array cartList, generant l'array cart. Crea un botó per tal de poder cridar a la funció generateCart(). Ajuda: Simplement s'ha de fer un bucle sobre el array cartList que rep la funció. -Per cada element de cartList, hem de validar si existeix en el array cart: En cas que no existeixi, l'afegim a l'array cart (compte, que no se t'oblidi agregar la propietat quantity amb valor 1 al producte abans de fer push). Si, en canvi, ja existeix aquest producte al carretó, haurem d'incrementar el camp quantity.
     cart = [];
     let i, j;
     let repeated = false;
@@ -151,28 +155,30 @@ function generateCart() {
             cart.push(cartList[i]);
         }
     }
+
     console.log(cart);
 }
 
 // Exercise 5
 function applyPromotionsCart() {
     // Apply promotions to each item in the array "cart"
-    // El client ens ha transmès dos tipus de promocions que vol per a la seva e-commerce: Si l'usuari compra 3 o més ampolles d'oli, el preu del producte descendeix a 10 euros. Quan es compren 10 o més productes per a fer pastís, el seu preu es rebaixa a 2/3. En aquest exercici has de completar la funció applyPromotionsCart(), la qual rep l'array cart, modificant el camp subtotalWithDiscount en cas que s'apliqui la promoció. Ajuda: com que producte del carret té quantitat, ja pots validar si té descompte: En cas que un producte tingui descompte, s'ha de guardar el preu total amb descompte en el camp: subtotalWithDiscount. Si no s'ha d'aplicar descompte, no fa falta que guardis res.
     for (let i = 0; i < cart.length; i++) {
         if (cart[i].id == 1) {
             if (cart[i].quantity >= 3) {
                 cart[i].price = 10;
-                subtotalWithDiscount = cart[i].price * cart[i].quantity;
+                cart[i].subtotalWithDiscount = cart[i].price * cart[i].quantity;
             } else {
                 cart[i].price = 10.5;
+                cart[i].subtotal = cart[i].price * cart[i].quantity;
             }
         }
         if (cart[i].id == 3) {
             if (cart[i].quantity >= 10) {
                 cart[i].price = 3.33;
-                subtotalWithDiscount = cart[i].price * cart[i].quantity;
+                cart[i].subtotalWithDiscount = cart[i].price * cart[i].quantity;
             } else {
                 cart[i].price = 5;
+                cart[i].subtotal = cart[i].price * cart[i].quantity;
             }
         }
     }
@@ -181,7 +187,6 @@ function applyPromotionsCart() {
 // Exercise 6
 function printCart() {
     // Fill the shopping cart modal manipulating the shopping cart dom
-    //El codi encarregat de mostrar el carret de la compra en el modal amb id "cartModal", ha d'incloure's dins de la funció printCart()
     let cartTable = "";
 
     for (let i = 0; i < cart.length; i++) {
@@ -201,31 +206,13 @@ function printCart() {
         cartTable += "</tr>";
     }
 
-    for (let i = 0; i < cart.length; i++) {
-        total += cart[i].price * cart[i].quantity;
-    }
-    
     document.getElementById("cart_list").innerHTML = cartTable;
-    document.getElementById("total_price").innerHTML = total.toFixed(2);
-}
-
-
-// ** Nivell II **
-
-// Exercise 8
-function addToCart(id) {
-    // Refactor previous code in order to simplify it 
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cart array or update its quantity in case it has been added previously.
-}
-
-// Exercise 9
-function removeFromCart(id) {
-    // 1. Loop for to the array products to get the item to add to cart
-    // 2. Add found product to the cartList array
+    calculateTotal();
 }
 
 function open_modal(){
 	console.log("Open Modal");
+    generateCart();
+    applyPromotionsCart();
 	printCart();
 }
