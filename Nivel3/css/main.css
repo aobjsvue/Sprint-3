@@ -1,0 +1,50 @@
+nav.transparent-bg {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+nav .navbar-nav .nav-item .nav-link {
+  color: #fa5959;
+}
+
+nav .navbar-nav .nav-item .nav-link:hover, nav .navbar-nav .nav-item .nav-link:focus {
+  color: #dc3545;
+}
+
+nav .navbar-nav .nav-item .nav-link.active, nav .navbar-nav .nav-item .nav-item.show .nav-link {
+  color: #dc3545;
+}
+
+.btn-outline-danger {
+  color: #fa5959;
+  background-color: #FFFFFF;
+  border-color: #fa5959;
+}
+
+.btn-outline-danger .badge {
+  background-color: #fa5959;
+}
+
+.btn-outline-danger:hover {
+  color: #FFFFFF;
+  background-color: #fa5959;
+}
+
+.btn-outline-danger:hover .badge {
+  background-color: #FFFFFF;
+  color: #fa5959;
+}
+
+.btn-check:focus + .btn-outline-danger, .btn-outline-danger:focus {
+  color: #fa5959;
+  background-color: #FFFFFF;
+}
+
+.btn-check:focus + .btn-outline-danger .badge, .btn-outline-danger:focus .badge {
+  background-color: #fa5959;
+  color: #FFFFFF;
+}
+
+.red-bg {
+  background-color: #fa5959;
+}
+/*# sourceMappingURL=main.css.map */
